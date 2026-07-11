@@ -1,38 +1,28 @@
 require("dotenv").config();
 
 const express = require("express");
-const { MongoClient } = require("mongodb");
+const { initDb } = require("./data/database");
+
+const contactsRoute = require("./routes/contacts");
 
 const app = express();
 
 const port = process.env.PORT || 3000;
 
-const uri = process.env.MONGODB_URI;
+app.use(express.json());
 
-console.log("MongoDB URI:", uri.replace(/\/\/.*?:.*?@/, "//<hidden>:<hidden>@"));
+app.get("/", (req, res) => {
+  res.send("Contacts API is running!");
+});
 
-const client = new MongoClient(uri);
+app.use("/contacts", contactsRoute);
 
-async function startServer() {
-  try {
-    await client.connect();
-
-    console.log("Connected to MongoDB!");
-
-    app.get("/", (req, res) => {
-      res.send("Contacts API is running!");
-    });
-
+initDb()
+  .then(() => {
     app.listen(port, () => {
       console.log(`Server running on port ${port}`);
     });
-
-  } 
-  catch (err) {
-  console.error("Failed to connect to MongoDB:");
-  console.error(err);
-  console.error(err.stack);
-}
-}
-
-startServer();
+  })
+  .catch((err) => {
+    console.error(err);
+  });
