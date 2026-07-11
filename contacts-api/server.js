@@ -3,7 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const { initDb } = require("./data/database");
 
-const contactsRoute = require("./routes/contacts");
+const contactsRoutes = require("./routes/contacts");
 
 const app = express();
 
@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
   res.send("Contacts API is running!");
 });
 
-app.use("/contacts", contactsRoute);
+app.use("/contacts", contactsRoutes);
 
 initDb()
   .then(() => {
@@ -24,5 +24,6 @@ initDb()
     });
   })
   .catch((err) => {
+    console.error("Database connection failed");
     console.error(err);
   });
