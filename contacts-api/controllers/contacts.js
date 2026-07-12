@@ -41,7 +41,47 @@ const getSingle = async (req, res) => {
   }
 };
 
+
+const createContact = async (req, res) => {
+  try {
+    const db = getDb();
+
+    const contact = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      favoriteColor: req.body.favoriteColor,
+      birthday: req.body.birthday,
+    };
+
+    // Validate required fields
+    if (
+      !contact.firstName ||
+      !contact.lastName ||
+      !contact.email ||
+      !contact.favoriteColor ||
+      !contact.birthday
+    ) {
+      return res.status(400).json({
+        message: "All fields are required."
+      });
+    }
+
+    const result = await db.collection("contacts").insertOne(contact);
+
+    res.status(201).json({
+      insertedId: result.insertedId,
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
+};
+
 module.exports = {
   getAll,
   getSingle,
+  createContact,
 };
