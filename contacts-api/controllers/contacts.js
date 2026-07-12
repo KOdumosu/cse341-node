@@ -44,7 +44,7 @@ const getSingle = async (req, res) => {
 
 const createContact = async (req, res) => {
   try {
-    const db = getDb();
+    const db = mongodb.getDb();
 
     const contact = {
       firstName: req.body.firstName,
@@ -54,7 +54,6 @@ const createContact = async (req, res) => {
       birthday: req.body.birthday,
     };
 
-    // Validate required fields
     if (
       !contact.firstName ||
       !contact.lastName ||
@@ -63,7 +62,7 @@ const createContact = async (req, res) => {
       !contact.birthday
     ) {
       return res.status(400).json({
-        message: "All fields are required."
+        message: "All fields are required.",
       });
     }
 
