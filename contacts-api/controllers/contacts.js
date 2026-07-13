@@ -126,9 +126,34 @@ const updateContact = async (req, res) => {
   }
 };
 
+const deleteContact = async (req, res) => {
+  try {
+    const contactId = new ObjectId(req.params.id);
+
+    const db = mongodb.getDb();
+
+    const result = await db.collection("contacts").deleteOne({
+      _id: contactId,
+    });
+
+    if (result.deletedCount > 0) {
+      res.status(204).send();
+    } else {
+      res.status(404).json({
+        message: "Contact not found.",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
+};
+
 module.exports = {
   getAll,
   getSingle,
   createContact,
   updateContact,
+  deleteContact,
 };
