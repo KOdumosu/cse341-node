@@ -1,0 +1,40 @@
+### Get all contacts
+GET https://contacts-api-xj3y.onrender.com/contacts
+
+###
+
+### Get single contact
+GET https://contacts-api-xj3y.onrender.com/contacts/6a5405b74ba1e663528acc22
+
+###
+
+### Create contact
+POST https://contacts-api-xj3y.onrender.com/contacts
+Content-Type: application/json
+
+{
+  "firstName": "Bruce",
+  "lastName": "Wayne",
+  "email": "bruce@wayne.com",
+  "favoriteColor": "Black",
+  "birthday": "1980-02-19"
+}
+
+###
+
+### Update contact
+PUT https://contacts-api-xj3y.onrender.com/contacts/6a5405b74ba1e663528acc22
+Content-Type: application/json
+
+{
+  "firstName": "Bruce",
+  "lastName": "Wayne",
+  "email": "batman@wayne.com",
+  "favoriteColor": "Black",
+  "birthday": "1980-02-19"
+}
+
+###
+
+### Delete contact
+DELETE https://contacts-api-xj3y.onrender.com/contacts/6a5405b74ba1e663528acc22
