@@ -30,9 +30,15 @@ app.use('/teachers', teacherRoutes);
 // Connect to MongoDB and start server
 connectDB()
   .then(() => {
-    app.listen(process.env.PORT || 3000, () => {
-      console.log('✅ Server running');
-      console.log('📚 Swagger Docs: http://localhost:3000/api-docs');
+    const port = process.env.PORT || 3000;
+
+    app.listen(port, () => {
+      console.log(`✅ Server running on port ${port}`);
+      console.log(
+        `📚 Swagger Docs: ${
+          process.env.RENDER_EXTERNAL_URL || `http://localhost:${port}`
+        }/api-docs`
+      );
     });
   })
   .catch((err) => {
