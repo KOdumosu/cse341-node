@@ -21,6 +21,7 @@ const studentsController = require('../controllers/students');
  *         description: Returns all students
  */
 router.get('/', studentsController.getAllStudents);
+
 /**
  * @swagger
  * /students/{id}:
@@ -28,15 +29,17 @@ router.get('/', studentsController.getAllStudents);
  *     summary: Get a student by ID
  *     tags: [Students]
  *     parameters:
- *       *       - in: path
-*         name: id
-*         required: true
-*         schema:
-*           type: string
-*         description: Student ID
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Student ID
  *     responses:
  *       200:
- *         description: Student found!
+ *         description: Student found
+ *       400:
+ *         description: Invalid student ID
  *       404:
  *         description: Student not found
  */
@@ -132,6 +135,8 @@ router.post('/', studentsController.createStudent);
  *         description: Student updated successfully
  *       400:
  *         description: Invalid input
+ *       404:
+ *         description: Student not found
  */
 router.put('/:id', studentsController.updateStudent);
 
@@ -142,15 +147,17 @@ router.put('/:id', studentsController.updateStudent);
  *     summary: Delete a student
  *     tags: [Students]
  *     parameters:
- *      - in: path
-*         name: id
-*         required: true
-*         schema:
-*           type: string
-*         description: Student ID
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Student ID
  *     responses:
  *       200:
  *         description: Student deleted successfully
+ *       400:
+ *         description: Invalid student ID
  *       404:
  *         description: Student not found
  */
