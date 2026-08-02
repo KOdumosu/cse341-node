@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const studentsController = require('../controllers/students');
+const { isAuthenticated } = require('../middleware/auth');
 
 /**
  * @swagger
@@ -20,7 +21,7 @@ const studentsController = require('../controllers/students');
  *       200:
  *         description: Returns all students
  */
-router.get('/', studentsController.getAllStudents);
+router.get('/', isAuthenticated, studentsController.getAllStudents);
 
 /**
  * @swagger
@@ -43,7 +44,7 @@ router.get('/', studentsController.getAllStudents);
  *       404:
  *         description: Student not found
  */
-router.get('/:id', studentsController.getStudentById);
+router.get('/:id', isAuthenticated, studentsController.getStudentById);
 
 /**
  * @swagger
@@ -86,7 +87,7 @@ router.get('/:id', studentsController.getStudentById);
  *       400:
  *         description: Invalid input
  */
-router.post('/', studentsController.createStudent);
+router.post('/', isAuthenticated, studentsController.createStudent);
 
 /**
  * @swagger
@@ -138,7 +139,11 @@ router.post('/', studentsController.createStudent);
  *       404:
  *         description: Student not found
  */
-router.put('/:id', studentsController.updateStudent);
+router.put(
+  '/:id',
+  isAuthenticated,
+  studentsController.updateStudent
+);
 
 /**
  * @swagger
@@ -161,6 +166,10 @@ router.put('/:id', studentsController.updateStudent);
  *       404:
  *         description: Student not found
  */
-router.delete('/:id', studentsController.deleteStudent);
+router.delete(
+  '/:id',
+  isAuthenticated,
+  studentsController.deleteStudent
+);
 
 module.exports = router;

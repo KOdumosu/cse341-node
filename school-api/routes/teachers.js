@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const teachersController = require('../controllers/teachers');
+const { isAuthenticated } = require('../middleware/auth');
 
 /**
  * @swagger
@@ -20,7 +21,7 @@ const teachersController = require('../controllers/teachers');
  *       200:
  *         description: Returns all teachers
  */
-router.get('/', teachersController.getAllTeachers);
+router.get('/', isAuthenticated, teachersController.getAllTeachers);
 
 /**
  * @swagger
@@ -41,7 +42,7 @@ router.get('/', teachersController.getAllTeachers);
  *       404:
  *         description: Teacher not found
  */
-router.get('/:id', teachersController.getTeacherById);
+router.get('/:id', isAuthenticated, teachersController.getTeacherById);
 
 /**
  * @swagger
@@ -84,7 +85,7 @@ router.get('/:id', teachersController.getTeacherById);
  *       400:
  *         description: Invalid input
  */
-router.post('/', teachersController.createTeacher);
+router.post('/', isAuthenticated, teachersController.createTeacher);
 
 /**
  * @swagger
@@ -134,7 +135,11 @@ router.post('/', teachersController.createTeacher);
  *       400:
  *         description: Invalid input
  */
-router.put('/:id', teachersController.updateTeacher);
+router.put(
+  '/:id',
+  isAuthenticated,
+  teachersController.updateTeacher
+);
 
 /**
  * @swagger
@@ -155,6 +160,10 @@ router.put('/:id', teachersController.updateTeacher);
  *       404:
  *         description: Teacher not found
  */
-router.delete('/:id', teachersController.deleteTeacher);
+router.delete(
+  '/:id',
+  isAuthenticated,
+  teachersController.deleteTeacher
+);
 
 module.exports = router;
